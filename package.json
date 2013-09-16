@@ -1,0 +1,38 @@
+{
+  "name": "helper-repeat",
+  "version": "0.1.0",
+  "description": "Repeat the encapsulated block of content _n_ times.",
+  "homepage": "https://github.com/helpers/helper-repeat",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assemble/helper-repeat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/helpers/helper-repeat/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/helpers/helper-repeat/blob/master/LICENSE-MIT"
+    }
+  ],
+  "devDependencies": {
+    "assemble-internal": "~0.2.0"
+  },
+  "keywords": [
+    "helper",
+    "mixin",
+    "handlebars helper",
+    "underscore mixin",
+    "filter",
+    "template filter",
+    "swig filter",
+    "lodash",
+    "underscore",
+    "convenience methods"
+  ]
+}
