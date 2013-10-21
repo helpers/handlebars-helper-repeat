@@ -1,23 +1,23 @@
 {
-  "name": "helper-repeat",
-  "version": "0.1.0",
+  "name": "handlebars-helper-repeat",
+  "version": "0.1.1",
   "description": "Repeat the encapsulated block of content _n_ times.",
-  "homepage": "https://github.com/helpers/helper-repeat",
+  "homepage": "https://github.com/helpers/handlebars-helper-repeat",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/assemble/helper-repeat.git"
+    "url": "https://github.com/helpers/handlebars-helper-repeat.git"
   },
   "bugs": {
-    "url": "https://github.com/helpers/helper-repeat/issues"
+    "url": "https://github.com/helpers/handlebars-helper-repeat/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/helpers/helper-repeat/blob/master/LICENSE-MIT"
+      "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE-MIT"
     }
   ],
   "devDependencies": {

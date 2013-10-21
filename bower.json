@@ -1,3 +1,5 @@
 {
-  "name": "helper-repeat"
+  "name": "handlebars-helper-repeat",
+  "main": "index.js",
+  "version": "0.1.1"
 }

@@ -1,4 +1,4 @@
-# {{repeat}} [![NPM version](https://badge.fury.io/js/helper-repeat.png)](http://badge.fury.io/js/helper-repeat)
+# {{repeat}} [![NPM version](https://badge.fury.io/js/handlebars-helper-repeat.png)](http://badge.fury.io/js/handlebars-helper-repeat)
 
 > Repeat the encapsulated block of content _n_ times.
 
@@ -6,7 +6,7 @@
 In the root of your project, run the following in the command line:
 
 ```bash
-npm i helper-repeat --save-dev
+npm i handlebars-helper-repeat --save-dev
 ```
 
 ## Usage
@@ -20,13 +20,13 @@ npm i helper-repeat --save-dev
 
 ## Usage in Assemble
 
-In your Gruntfile, simply add `helper-repeat` to the `helpers` property in the [Assemble](http://assemble.io) task or target options:
+In your Gruntfile, simply add `handlebars-helper-repeat` to the `helpers` property in the [Assemble](http://assemble.io) task or target options:
 
 ```javascript
 grunt.initConfig({
   assemble: {
     options: {
-      helpers: ['helper-repeat']
+      helpers: ['handlebars-helper-repeat']
     }
     ...
   }
