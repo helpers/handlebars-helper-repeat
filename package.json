@@ -20,19 +20,11 @@
       "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE-MIT"
     }
   ],
-  "devDependencies": {
-    "assemble-internal": "~0.2.0"
-  },
+  "main": "index.js",
   "keywords": [
+    "assemble",
     "helper",
-    "mixin",
-    "handlebars helper",
-    "underscore mixin",
-    "filter",
-    "template filter",
-    "swig filter",
-    "lodash",
-    "underscore",
-    "convenience methods"
+    "repeat",
+    "handlebars helper"
   ]
 }
