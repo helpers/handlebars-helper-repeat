@@ -1,0 +1,11 @@
+v0.2.0:
+  date: 2014-01-12
+  changes:
+    - "Adds {{@index}} to context. "
+    - "Adds more documentation. "
+    - "Adds Digits as a dependency, for padding generated numbers (@index). "
+    - "Adds basic tests and fixtures. "
+v0.1.0:
+  date: 2013-09-16
+  changes:
+    - "First commmit."
