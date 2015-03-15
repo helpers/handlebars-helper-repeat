@@ -1,6 +1,6 @@
 # handlebars-helper-repeat [![NPM version](https://badge.fury.io/js/handlebars-helper-repeat.svg)](http://badge.fury.io/js/handlebars-helper-repeat)  [![Build Status](https://travis-ci.org/helpers/handlebars-helper-repeat.svg)](https://travis-ci.org/helpers/handlebars-helper-repeat) 
 
-> Repeat the encapsulated block of content _n_ times.
+> Handlebars block helper for repeating whatever is inside the block `n` number of times.
 
 If you find a bug or have a feature request, [please create an issue](https://github.com/helpers/handlebars-helper-repeat/issues).
 
@@ -55,7 +55,7 @@ Results in something like:
 
 ```html
 <button>Click me!</button><span>17</span>
-<button>Click me!</button><span>17</span>
+<button>Click me!</button><span>18</span>
 ```
 
 **Index**

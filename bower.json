@@ -1,6 +1,6 @@
 {
   "name": "handlebars-helper-repeat",
-  "description": "Repeat the encapsulated block of content _n_ times.",
+  "description": "Handlebars block helper for repeating whatever is inside the block `n` number of times.",
   "repository": {
     "type": "git",
     "url": "https://github.com/helpers/handlebars-helper-repeat.git"
@@ -20,10 +20,11 @@
     "index.js"
   ],
   "dependencies": {
-    "digits": "~0.1.2",
-    "is-number": "^1.1.2"
+    "is-number": "^1.1.2",
+    "mixin-deep": "^1.0.1"
   },
   "devDependencies": {
+    "engine-handlebars": "^0.6.1",
     "handlebars": "^3.0.0",
     "mocha": "^2.2.1",
     "should": "^5.2.0",
