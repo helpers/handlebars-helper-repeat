@@ -1,7 +1,8 @@
-/**
- * Handlebars Helper: {{repeat}}
- * Copyright (c) 2014 Jon Schlinkert
- * Licensed under the MIT License (MIT).
+/*!
+ * handlebars-helper-repeat <https://github.com/helpers/handlebars-helper-repeat>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
 'use strict';

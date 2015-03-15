@@ -1,7 +1,7 @@
 {
   "name": "handlebars-helper-repeat",
-  "version": "0.2.0",
   "description": "Repeat the encapsulated block of content _n_ times.",
+  "version": "0.2.0",
   "homepage": "https://github.com/helpers/handlebars-helper-repeat",
   "author": {
     "name": "Jon Schlinkert",
@@ -14,11 +14,12 @@
   "bugs": {
     "url": "https://github.com/helpers/handlebars-helper-repeat/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE-MIT"
-    }
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE"
+  },
+  "files": [
+    "index.js"
   ],
   "main": "index.js",
   "dependencies": {
