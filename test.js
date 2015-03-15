@@ -10,7 +10,7 @@
 /* deps:mocha */
 var assert = require('assert');
 var should = require('should');
-var helper = require('..');
+var helper = require('./');
 var Template = require('template');
 var handlebars;
 var template;
