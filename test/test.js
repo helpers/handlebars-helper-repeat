@@ -18,7 +18,8 @@ var template;
 describe('handlebars', function () {
   beforeEach(function () {
     handlebars = require('handlebars');
-    handlebars.registerHelper('repeat', helper(handlebars));
+
+    handlebars.registerHelper('repeat', helper);
     handlebars.registerPartial('button', '<button>{{text}}</button>');
     handlebars.registerPartial('outter', '<button>{{> inner }}</button>');
     handlebars.registerPartial('inner', '<button>{{zzz}}</button>');
@@ -32,44 +33,50 @@ describe('handlebars', function () {
 
   it('should output the inverse when no number is specified:', function () {
     var ctx = {text: 'foo'};
-    var actual = handlebars.compile('{{#repeat}}{{> button }}{{else}}Nothing :({{/repeat}}')(ctx);
+    var actual = handlebars.compile('{{#repeat}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
     actual.should.eql('Nothing :(');
   });
 
-  it('should allow private variables to be passed on the context:', function () {
-    var ctx = {opts: {repeat: {whatever: 'Bar'}}};
-    var actual = handlebars.compile('{{#repeat 1 opts}}{{@whatever}}{{/repeat}}')(ctx);
-    actual.should.eql('<button>Bar</button>\n');
+  it('should allow the count to be specified on the hash:', function () {
+    var ctx = {text: 'foo'};
+    var actual = handlebars.compile('{{#repeat count=2}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
+    actual.should.eql('<button>foo</button>\n<button>foo</button>\n');
   });
 
-  // it('should allow context to be passed:', function () {
-  //   var ctx = {a: {b: {c: {text: 'DDD'}}}};
-  //   handlebars.compile('{{repeat "button" a.b.c}}')(ctx).should.eql('Click me!DDDafter');
-  // });
+  it('should expose hash variables as private variables:', function () {
+    var ctx = {text: 'foo'};
+    var a = handlebars.compile('{{#repeat count=2}}{{@count}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
+    a.should.eql('2<button>foo</button>\n2<button>foo</button>\n');
 
-  // it('should work with other repeats:', function () {
-  //   var ctx = {zzz: ' __ZZZ__ '};
-  //   handlebars.compile('{{repeat "outter"}}')(ctx).should.eql('Click me!Click me! __ZZZ__ afterafter');
-  // });
+    var b = handlebars.compile('{{#repeat count=2}}{{@index}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
+    b.should.eql('0<button>foo</button>\n1<button>foo</button>\n');
+  });
+
+  it('should start the index with the given number:', function () {
+    var ctx = {text: 'foo'};
+    var actual = handlebars.compile('{{#repeat count=2 start=17}}{{@index}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
+    actual.should.eql('17<button>foo</button>\n18<button>foo</button>\n');
+  });
 });
 
-// describe('Template', function () {
-//   beforeEach(function () {
-//     template = new Template();
-//     handlebars = require('engine-handlebars');
+describe('Template', function () {
+  beforeEach(function () {
+    template = new Template();
+    handlebars = require('engine-handlebars');
 
-//     template.engine('hbs', handlebars);
-//     template.helper('repeat', helper(handlebars));
+    template.engine('hbs', handlebars);
+    template.helper('repeat', helper);
 
-//     template.repeat('button.hbs', 'Click me!{{text}}after');
-//     template.data({text: ' __BAR__ '})
-//   });
+    template.partial('button.hbs', '<button>{{text}}</button>');
+    template.page('fixture.hbs', '{{#repeat 2}}{{> button }}\n{{/repeat}}');
+    template.data({text: 'foo'})
+  });
 
-//   it('should work with Template:', function (done) {
-//     template.render('{{repeat "button.hbs"}}', {ext: 'hbs'}, function (err, content) {
-//       if (err) console.log(err)
-//       content.should.eql('Click me! __BAR__ after');
-//     });
-//     done();
-//   });
-// });
+  it('should work with Template:', function (done) {
+    template.render('fixture.hbs', function (err, content) {
+      if (err) console.log(err)
+      content.should.eql('<button>foo</button>\n<button>foo</button>\n');
+    });
+    done();
+  });
+});

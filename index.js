@@ -7,40 +7,51 @@
 
 'use strict';
 
-var digits = require('digits');
+var isNumber = require('is-number');
+var merge = require('mixin-deep');
 
-module.exports.register = function(Handlebars, options) {
-  options = options || {};
+module.exports = function repeat(n, options) {
+  /* jshint validthis: true */
+  var hasNumber = isNumber(n);
+  var context = {};
+  var self = this;
 
-  /**
-   * Repeat the content inside a Handlebars block expression
-   * @param  {Number} n     Number of times to duplicate content.
-   * @param  {Object} opts  Options object
-   * @return {String}       Content repeated n times
-   *
-   * @example:
-   *    {{#repeat '10'}}
-   *      <div id="{{@index}}">
-   *        {{> button }}
-   *      </div>
-   *    {{/repeat}}
-   */
-  Handlebars.registerHelper('repeat', function(n, options) {
-    options = options || {};
-    var _data = {};
-    if (options._data) {
-      _data = Handlebars.createFrame(options._data);
+  if (!hasNumber) {
+    options = n;
+  }
+
+  if (self && self.context) {
+    merge(self, self.context);
+  }
+
+  if (options.hasOwnProperty('hash')) {
+    merge(options, options.hash);
+  }
+
+  if (options.count) {
+    n = options.count;
+    hasNumber = true;
+  }
+
+  merge(options, self, context);
+  if (hasNumber) {
+    return block(options);
+  } else {
+    return options.inverse(options);
+  }
+
+  function block(opts) {
+    opts = opts || {};
+    var str = '';
+
+    var hash = opts.hash || {};
+    hash.start = hash.start || 0;
+
+    for (var i = hash.start; i < n + hash.start; i++) {
+      hash.index = i;
+
+      str += opts.fn(opts, {data: hash});
     }
-
-    var content = '';
-    var count = n - 1;
-    for (var i = 0; i <= count; i++) {
-      _data = {
-        index: digits.pad((i + 1), {auto: n})
-      };
-      content += options.fn(this, {data: _data});
-    }
-    return new Handlebars.SafeString(content);
-  });
-};
-
+    return str;
+  }
+}
