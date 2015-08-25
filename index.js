@@ -49,6 +49,8 @@ module.exports = function repeat(n, options) {
 
     for (var i = hash.start; i < n + hash.start; i++) {
       hash.index = i;
+      hash.first = (i == 0);
+      hash.last = (i == n + hash.start - 1);
 
       str += opts.fn(opts, {data: hash});
     }
