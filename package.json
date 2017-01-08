@@ -17,15 +17,15 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
-    "is-number": "^1.1.2",
-    "mixin-deep": "^1.0.1"
+    "is-number": "^3.0.0",
+    "mixin-deep": "^1.1.3"
   },
   "devDependencies": {
-    "engine-handlebars": "^0.6.1",
-    "handlebars": "^3.0.0",
-    "mocha": "^2.2.1",
-    "should": "^5.2.0",
-    "template": "^0.11.1"
+    "engine-handlebars": "^0.8.0",
+    "gulp-format-md": "^0.1.11",
+    "handlebars": "^4.0.6",
+    "mocha": "^3.2.0",
+    "templates": "^0.25.3"
   },
   "keywords": [
     "assemble",
@@ -38,5 +38,28 @@
     "repeat",
     "template",
     "templates"
-  ]
+  ],
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "handlebars-helpers",
+        "template-helpers"
+      ]
+    },
+    "reflinks": [
+      "verb",
+      "verb-generate-readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
+  }
 }
