@@ -11,47 +11,35 @@ var isNumber = require('is-number');
 var merge = require('mixin-deep');
 
 module.exports = function repeat(n, options) {
-  /* jshint validthis: true */
-  var hasNumber = isNumber(n);
-  var context = {};
-  var self = this;
+  var isNum = isNumber(n);
 
-  if (!hasNumber) {
+  if (!isNum) {
     options = n;
+    n = 0;
   }
 
-  if (self && self.context) {
-    merge(self, self.context);
+  options = options || {};
+  var opts = merge({count: n}, options, options.hash);
+  var ctx = this.context
+    ? merge({}, this.context, opts)
+    : merge({}, this, opts);
+
+  if (opts.count) {
+    return block(ctx);
   }
 
-  if (options.hasOwnProperty('hash')) {
-    merge(options, options.hash);
+  return options.inverse(ctx);
+};
+
+function block(options) {
+  var max = options.count;
+  var str = '';
+
+  var start = options.start || 0;
+
+  for (var i = start; i < (max + start); i++) {
+    var data = merge({index: i}, options);
+    str += options.fn(options, {data: data});
   }
-
-  if (options.count) {
-    n = options.count;
-    hasNumber = true;
-  }
-
-  merge(options, self, context);
-  if (hasNumber) {
-    return block(options);
-  } else {
-    return options.inverse(options);
-  }
-
-  function block(opts) {
-    opts = opts || {};
-    var str = '';
-
-    var hash = opts.hash || {};
-    hash.start = hash.start || 0;
-
-    for (var i = hash.start; i < n + hash.start; i++) {
-      hash.index = i;
-
-      str += opts.fn(opts, {data: hash});
-    }
-    return str;
-  }
+  return str;
 }
