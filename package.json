@@ -3,25 +3,19 @@
   "description": "Handlebars block helper for repeating whatever is inside the block `n` number of times.",
   "version": "0.3.1",
   "homepage": "https://github.com/helpers/handlebars-helper-repeat",
-  "author": {
-    "name": "Jon Schlinkert",
-    "url": "https://github.com/jonschlinkert"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/helpers/handlebars-helper-repeat.git"
-  },
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "helpers/handlebars-helper-repeat",
   "bugs": {
     "url": "https://github.com/helpers/handlebars-helper-repeat/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "files": [
     "index.js"
   ],
   "main": "index.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "dependencies": {
     "is-number": "^1.1.2",
     "mixin-deep": "^1.0.1"
@@ -36,9 +30,13 @@
   "keywords": [
     "assemble",
     "assemblehelper",
-    "helper",
-    "repeat",
     "handlebars",
-    "handlebars helper"
+    "handlebars helper",
+    "helper",
+    "helpers",
+    "render",
+    "repeat",
+    "template",
+    "templates"
   ]
 }
