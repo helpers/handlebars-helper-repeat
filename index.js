@@ -8,9 +8,12 @@
 'use strict';
 
 module.exports = function repeat() {
-  var options = arguments[arguments.length - 1];
+  const args_length = arguments.length;
+  if (args_length > 2) throw new Error(`Expected 0, 1 or 2 arguments, but got ${args_length}`);
 
-  var count = arguments.length === 1 ? options.hash.count : arguments[0];
+  var options = arguments[args_length - 1];
+
+  var count = args_length === 1 ? (options.hash.count || 0) : arguments[0];
   var start = options.hash.start || 0;
   var pace = options.hash.pace || 1;
 
@@ -29,12 +32,20 @@ function block({ count, start, pace }, _this, fn) {
 
   var index = start;
 
-  while (index < max) {
-    var data = { index, count, start, pace };
-    var blockParams = [index, count, start, pace];
+  do {
+    var data = {
+      index,
+      count,
+      start,
+      pace,
+      first: index === start,
+      last: index >= max - pace
+    };
+    console.log(data);
+    var blockParams = [index, data];
     str += fn(_this, { data, blockParams });
     index += data.pace;
-  }
+  } while (index < max);
 
   return str;
 }

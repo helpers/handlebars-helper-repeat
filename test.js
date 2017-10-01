@@ -14,9 +14,39 @@ var helper = require('./');
 var handlebars;
 var app;
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 describe('handlebars', function() {
   beforeEach(function() {
     handlebars = require('handlebars');
+    handlebars.registerHelper({
+      eq: function(v1, v2) {
+        return v1 === v2;
+      },
+      ne: function(v1, v2) {
+        return v1 !== v2;
+      },
+      lt: function(v1, v2) {
+        return v1 < v2;
+      },
+      gt: function(v1, v2) {
+        return v1 > v2;
+      },
+      lte: function(v1, v2) {
+        return v1 <= v2;
+      },
+      gte: function(v1, v2) {
+        return v1 >= v2;
+      },
+      and: function(v1, v2) {
+        return v1 && v2;
+      },
+      or: function(v1, v2) {
+        return v1 || v2;
+      }
+    });
     handlebars.registerHelper('repeat', helper);
     handlebars.registerPartial('button', '<button>{{text}}</button>');
     handlebars.registerPartial('outter', '<button>{{> inner }}</button>');
@@ -58,8 +88,52 @@ describe('handlebars', function() {
 
   it('should support nested repeats with block params', function() {
     var ctx = {sep: ', '};
-    var template = '{{#repeat count=2 start=17 pace=2 as |outer_index|}}{{#repeat 2 as |inner_index|}}{{outer_index}} {{@index}} {{inner_index}}{{sep}}{{/repeat}}{{/repeat}}';
-    var expected = '17 0 0, 17 1 1, 19 0 0, 19 1 1, ';
+    var template =
+      '{{#repeat count=2 start=17 pace=2 as |outer_index outer_context|}}' +
+        '{{#repeat 2 as |inner_index inner_context|}}' +
+          '{{outer_index}} {{@index}} {{inner_index}}' +
+          '{{#unless (and outer_context.last inner_context.last)}}' +
+            '{{sep}}' +
+          '{{/unless}}' +
+        '{{/repeat}}' +
+      '{{/repeat}}';
+    var expected =
+      '17 0 0, ' +
+      '17 1 1, ' +
+      '19 0 0, ' +
+      '19 1 1';
+    var actual = handlebars.compile(template)(ctx);
+    assert.equal(actual, expected);
+  });
+
+  it('should support last and first in nested repeats', function() {
+    var ctx = {
+      sep: '\n',
+      count: 3,
+      random_start1: getRandomInt(),
+      random_start2: getRandomInt(),
+      random_pace1: getRandomInt(),
+      random_pace2: getRandomInt()
+    };
+    var template =
+      '{{#repeat count=count start=random_start1 pace=random_pace1 as |outer_index outer_context|}}' +
+        '{{#repeat count=count start=random_start2 pace=random_pace2 as |inner_index inner_context|}}' +
+          'first: {{outer_context.first}} {{inner_context.first}}, last: {{outer_context.last}} {{inner_context.last}}' +
+          '{{#unless (and outer_context.last inner_context.last)}}' +
+            '{{sep}}' +
+          '{{/unless}}' +
+        '{{/repeat}}' +
+      '{{/repeat}}';
+    var expected =
+      'first: true true, last: false false\n' +
+      'first: true false, last: false false\n' +
+      'first: true false, last: false true\n' +
+      'first: false true, last: false false\n' +
+      'first: false false, last: false false\n' +
+      'first: false false, last: false true\n' +
+      'first: false true, last: true false\n' +
+      'first: false false, last: true false\n' +
+      'first: false false, last: true true';
     var actual = handlebars.compile(template)(ctx);
     assert.equal(actual, expected);
   });
