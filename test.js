@@ -55,6 +55,14 @@ describe('handlebars', function() {
     var actual = handlebars.compile('{{#repeat count=2 start=17}}{{@index}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
     assert.equal(actual, '17<button>foo</button>\n18<button>foo</button>\n');
   });
+
+  it('should support nested repeats with block params', function() {
+    var ctx = {sep: ', '};
+    var template = '{{#repeat count=2 start=17 pace=2 as |outer_index|}}{{#repeat 2 as |inner_index|}}{{outer_index}} {{@index}} {{inner_index}}{{sep}}{{/repeat}}{{/repeat}}';
+    var expected = '17 0 0, 17 1 1, 19 0 0, 19 1 1, ';
+    var actual = handlebars.compile(template)(ctx);
+    assert.equal(actual, expected);
+  });
 });
 
 describe('Templates', function() {

@@ -7,39 +7,34 @@
 
 'use strict';
 
-var isNumber = require('is-number');
-var merge = require('mixin-deep');
+module.exports = function repeat() {
+  var options = arguments[arguments.length - 1];
 
-module.exports = function repeat(n, options) {
-  var isNum = isNumber(n);
+  var count = arguments.length === 1 ? options.hash.count : arguments[0];
+  var start = options.hash.start || 0;
+  var pace = options.hash.pace || 1;
 
-  if (!isNum) {
-    options = n;
-    n = 0;
+  var data = { count, start, pace };
+
+  if (data.count > 0) {
+    return block(data, this, options.fn);
   }
 
-  options = options || {};
-  var opts = merge({count: n}, options, options.hash);
-  var ctx = this.context
-    ? merge({}, this.context, opts)
-    : merge({}, this, opts);
-
-  if (opts.count) {
-    return block(ctx);
-  }
-
-  return options.inverse(ctx);
+  return options.inverse(this);
 };
 
-function block(options) {
-  var max = options.count;
+function block({ count, start, pace }, _this, fn) {
   var str = '';
+  var max = count * pace + start;
 
-  var start = options.start || 0;
+  var index = start;
 
-  for (var i = start; i < (max + start); i++) {
-    var data = merge({index: i}, options);
-    str += options.fn(options, {data: data});
+  while (index < max) {
+    var data = { index, count, start, pace };
+    var blockParams = [index, count, start, pace];
+    str += fn(_this, { data, blockParams });
+    index += data.pace;
   }
+
   return str;
 }
