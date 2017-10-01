@@ -1,7 +1,7 @@
 /*!
  * handlebars-helper-repeat <https://github.com/helpers/handlebars-helper-repeat>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert, Sergey Homa (BjornMelgaard).
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT License.
  */
 

@@ -21,32 +21,7 @@ function getRandomInt(min, max) {
 describe('handlebars', function() {
   beforeEach(function() {
     handlebars = require('handlebars');
-    handlebars.registerHelper({
-      eq: function(v1, v2) {
-        return v1 === v2;
-      },
-      ne: function(v1, v2) {
-        return v1 !== v2;
-      },
-      lt: function(v1, v2) {
-        return v1 < v2;
-      },
-      gt: function(v1, v2) {
-        return v1 > v2;
-      },
-      lte: function(v1, v2) {
-        return v1 <= v2;
-      },
-      gte: function(v1, v2) {
-        return v1 >= v2;
-      },
-      and: function(v1, v2) {
-        return v1 && v2;
-      },
-      or: function(v1, v2) {
-        return v1 || v2;
-      }
-    });
+    handlebars.registerHelper(require('handlebars-helpers').comparison());
     handlebars.registerHelper('repeat', helper);
     handlebars.registerPartial('button', '<button>{{text}}</button>');
     handlebars.registerPartial('outter', '<button>{{> inner }}</button>');
