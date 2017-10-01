@@ -1,7 +1,7 @@
 /*!
  * handlebars-helper-repeat <https://github.com/helpers/handlebars-helper-repeat>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Copyright (c) 2014-2015, Jon Schlinkert, Sergey Homa (BjornMelgaard).
  * Licensed under the MIT License.
  */
 
@@ -41,7 +41,6 @@ function block({ count, start, pace }, _this, fn) {
       first: index === start,
       last: index >= max - pace
     };
-    console.log(data);
     var blockParams = [index, data];
     str += fn(_this, { data, blockParams });
     index += data.pace;
