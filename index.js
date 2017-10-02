@@ -7,39 +7,44 @@
 
 'use strict';
 
-var isNumber = require('is-number');
-var merge = require('mixin-deep');
+module.exports = function repeat() {
+  const args_length = arguments.length;
+  if (args_length > 2) throw new Error(`Expected 0, 1 or 2 arguments, but got ${args_length}`);
 
-module.exports = function repeat(n, options) {
-  var isNum = isNumber(n);
+  var options = arguments[args_length - 1];
 
-  if (!isNum) {
-    options = n;
-    n = 0;
+  var count = args_length === 1 ? (options.hash.count || 0) : arguments[0];
+  var start = options.hash.start || 0;
+  var pace = options.hash.pace || 1;
+
+  var data = { count, start, pace };
+
+  if (data.count > 0) {
+    return block(data, this, options.fn);
   }
 
-  options = options || {};
-  var opts = merge({count: n}, options, options.hash);
-  var ctx = this.context
-    ? merge({}, this.context, opts)
-    : merge({}, this, opts);
-
-  if (opts.count) {
-    return block(ctx);
-  }
-
-  return options.inverse(ctx);
+  return options.inverse(this);
 };
 
-function block(options) {
-  var max = options.count;
+function block({ count, start, pace }, _this, fn) {
   var str = '';
+  var max = count * pace + start;
 
-  var start = options.start || 0;
+  var index = start;
 
-  for (var i = start; i < (max + start); i++) {
-    var data = merge({index: i}, options);
-    str += options.fn(options, {data: data});
-  }
+  do {
+    var data = {
+      index,
+      count,
+      start,
+      pace,
+      first: index === start,
+      last: index >= max - pace
+    };
+    var blockParams = [index, data];
+    str += fn(_this, { data, blockParams });
+    index += data.pace;
+  } while (index < max);
+
   return str;
 }

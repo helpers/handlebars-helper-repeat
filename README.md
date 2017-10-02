@@ -43,6 +43,9 @@ A few private variables are exposed to blocks:
 * `count` the total number of blocks being generated
 * `index` the index of the current block
 * `start` the start number to use instead of zero. Basically `index + start`
+* `pace`  the number thich increments index.
+* `first` boolean, shows whether current index is first
+* `last`  boolean, shows whether current index is latest
 
 Example:
 
@@ -83,6 +86,31 @@ Results in something like:
 </div>
 ```
 
+As block parameters
+
+```handlebars
+{{#repeat 3 as |outer_index outer_context|}}
+  {{#repeat 3 as |inner_index inner_context|}}
+    you have access to outer block data (the same is valid for inner_index and inner_context), for example:
+    {{outer_index}}
+    {{outer_context.count}}
+    {{outer_context.index}}
+    {{outer_context.start}}
+    {{outer_context.pace}}
+    {{outer_context.first}}
+    {{outer_context.last}}
+
+    {{@index}} here is index for inner block
+
+    complex logic example using `and` helper from handlebars-helpers:
+    {{#unless (and outer_context.last inner_context.last)}}
+      {{sep}}
+    {{/unless}}
+  {{/repeat}}
+  {{@index}} here is index for outer block
+{{/repeat}}
+```
+
 ## About
 
 ### Related projects
@@ -118,6 +146,9 @@ $ npm install -d && npm test
 
 * [github/jonschlinkert](https://github.com/jonschlinkert)
 * [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
+
+Sergey Homa
+* [github/bjornmelgaard](https://github.com/bjornmelgaard)
 
 ### License
 
