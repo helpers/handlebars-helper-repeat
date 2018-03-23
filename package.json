@@ -1,7 +1,7 @@
 {
   "name": "handlebars-helper-repeat",
   "description": "Handlebars block helper for repeating whatever is inside the block _n_ times.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/helpers/handlebars-helper-repeat",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "helpers/handlebars-helper-repeat",
