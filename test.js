@@ -1,10 +1,3 @@
-/*!
- * handlebars-helper-repeat <https://github.com/helpers/handlebars-helper-repeat>
- *
- * Copyright (c) 2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
 'use strict';
 
 require('mocha');
@@ -14,9 +7,14 @@ var helper = require('./');
 var handlebars;
 var app;
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 describe('handlebars', function() {
   beforeEach(function() {
     handlebars = require('handlebars');
+    handlebars.registerHelper(require('handlebars-helpers').comparison());
     handlebars.registerHelper('repeat', helper);
     handlebars.registerPartial('button', '<button>{{text}}</button>');
     handlebars.registerPartial('outter', '<button>{{> inner }}</button>');
@@ -33,6 +31,22 @@ describe('handlebars', function() {
     var ctx = {text: 'foo'};
     var actual = handlebars.compile('{{#repeat}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
     assert.equal(actual, 'Nothing :(');
+  });
+
+  it('should repeat a string', function() {
+    const actual = handlebars.compile('{{#repeat "foo" count=2}}{{.}}{{/repeat}}')();
+    assert.equal(actual, 'foofoo');
+  });
+
+  it('should work as a non-block helper', function() {
+    const actual = handlebars.compile('{{repeat "foo" count=2}}')();
+    assert.equal(actual, 'foofoo');
+  });
+
+  it('should work as a subexpression', function() {
+    handlebars.registerHelper('upper', str => str.toUpperCase());
+    const actual = handlebars.compile('{{upper (repeat "foo" count=2)}}')();
+    assert.equal(actual, 'FOOFOO');
   });
 
   it('should allow the count to be specified on the hash:', function() {
@@ -54,6 +68,58 @@ describe('handlebars', function() {
     var ctx = {text: 'foo'};
     var actual = handlebars.compile('{{#repeat count=2 start=17}}{{@index}}{{> button }}\n{{else}}Nothing :({{/repeat}}')(ctx);
     assert.equal(actual, '17<button>foo</button>\n18<button>foo</button>\n');
+  });
+
+  it('should support nested repeats with block params', function() {
+    var ctx = {sep: ', '};
+    var template =
+      '{{#repeat count=2 start=17 step=2 as |outer_index outer_context|}}' +
+        '{{#repeat 2 as |inner_index inner_context|}}' +
+          '{{outer_index}} {{@index}} {{inner_index}}' +
+          '{{#unless (and outer_context.last inner_context.last)}}' +
+            '{{sep}}' +
+          '{{/unless}}' +
+        '{{/repeat}}' +
+      '{{/repeat}}';
+    var expected =
+      '17 0 0, ' +
+      '17 1 1, ' +
+      '19 0 0, ' +
+      '19 1 1';
+    var actual = handlebars.compile(template)(ctx);
+    assert.equal(actual, expected);
+  });
+
+  it('should support last and first in nested repeats', function() {
+    var ctx = {
+      sep: '\n',
+      count: 3,
+      random_start1: getRandomInt(),
+      random_start2: getRandomInt(),
+      random_step1: getRandomInt(),
+      random_step2: getRandomInt()
+    };
+    var template =
+      '{{#repeat count=count start=random_start1 step=random_step1 as |outer_index outer_context|}}' +
+        '{{#repeat count=count start=random_start2 step=random_step2 as |inner_index inner_context|}}' +
+          'first: {{outer_context.first}} {{inner_context.first}}, last: {{outer_context.last}} {{inner_context.last}}' +
+          '{{#unless (and outer_context.last inner_context.last)}}' +
+            '{{sep}}' +
+          '{{/unless}}' +
+        '{{/repeat}}' +
+      '{{/repeat}}';
+    var expected =
+      'first: true true, last: false false\n' +
+      'first: true false, last: false false\n' +
+      'first: true false, last: false true\n' +
+      'first: false true, last: false false\n' +
+      'first: false false, last: false false\n' +
+      'first: false false, last: false true\n' +
+      'first: false true, last: true false\n' +
+      'first: false false, last: true false\n' +
+      'first: false false, last: true true';
+    var actual = handlebars.compile(template)(ctx);
+    assert.equal(actual, expected);
   });
 });
 
