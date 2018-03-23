@@ -1,41 +1,52 @@
 {
   "name": "handlebars-helper-repeat",
-  "description": "Handlebars block helper for repeating whatever is inside the block `n` number of times.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/helpers/handlebars-helper-repeat.git"
-  },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/helpers/handlebars-helper-repeat/blob/master/LICENSE"
-  },
+  "description": "Handlebars block helper for repeating whatever is inside the block _n_ times.",
+  "repository": "helpers/handlebars-helper-repeat",
+  "license": "MIT",
   "homepage": "https://github.com/helpers/handlebars-helper-repeat",
   "authors": [
-    {
-      "name": "Jon Schlinkert",
-      "homepage": "https://github.com/jonschlinkert"
-    }
+    "Jon Schlinkert"
   ],
   "main": [
     "index.js"
   ],
   "dependencies": {
-    "is-number": "^1.1.2",
-    "mixin-deep": "^1.0.1"
+    "is-number": "^3.0.0"
   },
   "devDependencies": {
-    "engine-handlebars": "^0.6.1",
-    "handlebars": "^3.0.0",
-    "mocha": "^2.2.1",
-    "should": "^5.2.0",
-    "template": "^0.11.1"
+    "engine-handlebars": "^0.8.0",
+    "gulp-format-md": "^0.1.11",
+    "handlebars": "^4.0.6",
+    "mocha": "^3.2.0",
+    "templates": "^0.25.3"
   },
   "keywords": [
     "assemble",
     "assemblehelper",
-    "helper",
-    "repeat",
     "handlebars",
-    "handlebars helper"
+    "handlebars helper",
+    "helper",
+    "helpers",
+    "render",
+    "repeat",
+    "template",
+    "templates"
+  ],
+  "version": "1.0.0",
+  "bugs": {
+    "url": "https://github.com/helpers/handlebars-helper-repeat/issues"
+  },
+  "files": [
+    "index.js"
+  ],
+  "ignore": [
+    "actual",
+    "bower_components",
+    "fixtures",
+    "node_modules",
+    "temp",
+    "test",
+    "test.js",
+    "tmp"
   ]
 }
