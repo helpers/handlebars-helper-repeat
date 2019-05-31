@@ -121,6 +121,21 @@ describe('handlebars', function() {
     var actual = handlebars.compile(template)(ctx);
     assert.equal(actual, expected);
   });
+
+  it('should keep @root intact', function() {
+    var ctx = {bar: [0],foo: 'bar'};
+    var template =
+      '{{#each bar}}' +
+        '{{#repeat 1}}' +
+          '{{@root/foo}}' +
+        '{{/repeat}}' +
+      '{{/each}}' +
+      '';
+    var expected =
+      'bar';
+    var actual = handlebars.compile(template)(ctx);
+    assert.equal(actual, expected);
+  });
 });
 
 describe('Templates', function() {
