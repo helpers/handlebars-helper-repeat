@@ -58,7 +58,8 @@ function repeatBlock({ count, start, step }, thisArg, options) {
       start,
       step,
       first: index === start,
-      last: index >= max - step
+      last: index >= max - step,
+      root: options.data.root,
     };
     var blockParams = [index, data];
     str += options.fn(thisArg, { data, blockParams });
